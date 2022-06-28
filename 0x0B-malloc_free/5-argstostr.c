@@ -1,50 +1,50 @@
-#include "main.h"
+#include <main.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 /**
- * argstostr - function that concatenates all the arguments of your program.
- *
- *
- * @ac: ARGC
- * @av: ARGV
- *
- * Return: Pointer
+ * *argstostr - convert arguments on command line to strings
+ * @ac: int type
+ * @av: pointer to array
+ * Return: arguments as strings
  */
+
 char *argstostr(int ac, char **av)
 {
-	int i = 0, j, longitud = 0, l, k;
-	char *string;
+	int size, count, count1, count2 = 0;
+	char *ptr;
 
-	if (ac == 0 || av == '\0')
-	return (NULL);
-
-	for (i = 0; i < ac; i++)
-	{
-		j = 0;
-		while (av[i][j] != '\0')
-		{
-			j++;
-		}
-		longitud  +=  j + 1;
-	}
-	string = malloc(sizeof(char) * (longitud + 1));
-
-	if (string == NULL)
+	if (ac == 0 || av == NULL)
 	{
 		return (NULL);
 	}
-	longitud = 0;
-	for (k = 0; k < ac; k++)
-	{
-		for (l = 0; av[k][l] != '\0'; l++)
-		{
-			*(string + longitud) = av[k][l];
-			longitud++;
-		}
-		*(string + longitud) = '\n';
-		longitud++;
-	}
 
-	return (string);
+	for (count = 0; count < ac; count++)
+	{
+		for (count1 = 0; av[count][count1] != '\0'; count1++)
+		{
+			size += 1;
+		}
+		size += 1;
+	}
+	size += 1;
+
+	ptr = malloc(sizeof(char) * size);
+	if (ptr == NULL)
+	{
+		free(ptr);
+		return (NULL);
+	}
+	for (count = 0; count < ac; count++)
+	{
+		for (count1 = 0; av[count][count1] != '\0'; count1++)
+		{
+			ptr[count2] = av[count][count1];
+			count2++;
+		}
+		ptr[count2] = '\n';
+		count2++;
+	}
+	ptr[count2] = '\0';
+	return (ptr);
 }
